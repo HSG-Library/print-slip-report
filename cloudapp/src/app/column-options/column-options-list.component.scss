@@ -1,0 +1,55 @@
+app-column-option {
+  width: 100%;
+}
+
+
+.cdk-drag-preview {
+  display: none;
+}
+
+
+.drag-indicator {
+
+  cursor: move;
+
+  &.disabled {
+    cursor: default;
+  }
+
+}
+
+
+.options-list {
+
+  &:focus {
+    outline: none;
+  }
+
+  &.disabled .drag-indicator {
+    visibility: hidden;
+  }
+
+}
+
+
+.options-list-item {
+
+  padding: 0;
+
+  &:not(:hover) .drag-indicator {
+    visibility: hidden;
+  }
+
+}
+
+
+.toolbar {
+
+  height: auto;
+  padding: 0 16px;
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+}

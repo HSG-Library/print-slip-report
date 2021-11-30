@@ -1,0 +1,20 @@
+<ng-container *ngIf="!loading; else progressSpinner">
+  <div *ngFor="let table of tables | keyvalue">
+    <table>
+      <thead>
+        <tr>
+          <td *ngFor="let column of includedColumnOptions">{{ column.name }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of table.value">
+          <td *ngFor="let value of row.values">{{ value }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
+<ng-template #progressSpinner>
+  <slip-report-progress [progress]="progress" orientation="horizontal"></slip-report-progress>
+</ng-template>
