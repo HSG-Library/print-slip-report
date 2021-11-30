@@ -7,6 +7,10 @@ This an attempt to make an Cloud App solution for the idea to [allow configurati
 
 This app was developed as part of the [ANZREG](https://anzreg.igelu.org/) 2021 Cloud Apps hackathon.
 
+## Note on the origin of this cloudapp
+
+The code of this Cloudapp has been transferred to this repository in consultation with the original developers. The original code comes from the following repository: https://github.com/SydneyUniLibrary/print-slip-report
+Further development and maintenance will happen in this repository.
 
 ## License
 
