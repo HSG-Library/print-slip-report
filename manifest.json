@@ -2,18 +2,19 @@
    "id": "print-slip-report",
    "title": "Print Slip Report",
    "subtitle": "A customisable alternative to Alma's built-in print slip report",
-   "author": "slippery slips",
+   "author": "Amy Leong / Cattleya Tantri / Jim Nicholls / Jonas Furrer / Lani Valentine",
    "description": "Print or download only some of the columns of the print slip report.",
-   "license": "https://raw.githubusercontent.com/SydneyUniLibrary/print-slip-report/main/LICENSE",
+   "license": "https://github.com/HSG-Library/print-slip-report/blob/main/LICENSE",
    "contentSecurity": {
       "sandbox": {
          "popups": true,
-         "modals": true
+         "modals": true,
+         "downloads": true
       }
    },
    "pages": {
       "config": "/#/config",
-      "help": "https://github.com/SydneyUniLibrary/print-slip-report/wiki/Print-Slip-Report-help"
+      "help": "https://github.com/HSG-Library/print-slip-report/blob/main/README.md"
    },
    "icon": {
       "type": "url",
