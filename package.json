@@ -1,7 +1,7 @@
 {
   "name": "eca-print-slip-report",
   "description": "A customisable alternative to Alma's built-in print slip report",
-  "version": "v2021.3.1",
+  "version": "v2021.3.2",
   "license": "BSD-3-Clause",
   "homepage": "https://github.com/HSG-Library/print-slip-report",
   "bugs": "https://github.com/HSG-Library/print-slip-report/issues",
