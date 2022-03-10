@@ -26,8 +26,8 @@ export interface Location {
 })
 export class AlmaConfigurationService {
 
-  private _locationCache = new LRU<string, Promise<Location>>(100)
-  private _locationsForLibraryCache = new LRU<string, Promise<Location[]>>(5)
+  private _locationCache = new LRU<string, Promise<Location>>({ max: 100 })
+  private _locationsForLibraryCache = new LRU<string, Promise<Location[]>>({ max: 5 })
 
 
   constructor(
@@ -36,7 +36,7 @@ export class AlmaConfigurationService {
 
 
   location(libraryCode: string, locationCode: string): Promise<Location | undefined> {
-    let cacheKey = `${ libraryCode }‡${ locationCode }`
+    let cacheKey = `${libraryCode}‡${locationCode}`
     let locationPromise = this._locationCache.get(cacheKey)
     if (!locationPromise) {
       let locationsForLibraryPromise = this.locationsForLibrary(libraryCode)

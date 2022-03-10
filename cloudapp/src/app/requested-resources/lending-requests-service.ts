@@ -26,7 +26,7 @@ export interface ResourceSharingRequest {
 })
 export class LendingRequestsService {
 
-  private _lendingRequestsForLibraryCache = new LRU<string, Promise<ResourceSharingRequest[]>>(2)
+  private _lendingRequestsForLibraryCache = new LRU<string, Promise<ResourceSharingRequest[]>>({ max: 2 })
 
 
   constructor(
@@ -35,17 +35,17 @@ export class LendingRequestsService {
 
 
   lendingRequestsForLibraryWithStatus(library: string, status: string): Promise<ResourceSharingRequest[]> {
-    let cacheKey = `${ library }‡${ status }`
+    let cacheKey = `${library}‡${status}`
     let promise = this._lendingRequestsForLibraryCache.get(cacheKey)
     if (!promise) {
       promise = (
         this.restService
-        .call({
-          url: '/almaws/v1/task-lists/rs/lending-requests',
-          queryParams: { library, status }
-        })
-        .toPromise()
-        .then(resp => resp.user_resource_sharing_request)
+          .call({
+            url: '/almaws/v1/task-lists/rs/lending-requests',
+            queryParams: { library, status }
+          })
+          .toPromise()
+          .then(resp => resp.user_resource_sharing_request)
       )
       this._lendingRequestsForLibraryCache.set(cacheKey, promise)
     }
