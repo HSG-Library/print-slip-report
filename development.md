@@ -3,7 +3,7 @@
 ## Environment to run the CloudApp locally
 
 - `node.js` and `npm` the version to be used can be found in `.nvmrc`. If `node` is installed via `nvm` the correct version will be set automatically
-- Install the ECA CLI if not already installed, see [Documentation](https://developers.exlibrisgroup.com/cloudapps/started/): 
+- Install the ECA CLI if not already installed, see [Documentation](https://developers.exlibrisgroup.com/cloudapps/started/):
 
        npm install -g @exlibris/exl-cloudapp-cli
 
@@ -13,14 +13,14 @@
 ## Dependencies
 ### Project dependencies:
 dependecies:
-- `file-saver": "^2.0.0"`
-- `lru-cache": "^6.0.0"`
-- `sheetjs-style": "^0.15.0"`
-- `uuid": "^8.0.0"`
+- `"file-saver"`
+- `"lru-cache"`
+- `"sheetjs-style"`
+- `"uuid"`
 
 devDependencies:
-- `"@types/uuid": "^8.0.0"`
-- `"@types/lru-cache": "^5.0.0"`
+- `"@types/uuid"`
+- `"@types/lru-cache"`
 
 ### Dependencies added by the ECA framework:
 <details><summary>dependecies</summary>
@@ -66,4 +66,4 @@ devDependencies:
 Dependencies added by the ECA framework can mostly be ignored.
 
 - Look for outdated dependencies: `npm outdated`
-- Update safley, according to `package.json` [syntax (`~`, `^`)](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies) : `npm update` 
+- Update safley, according to `package.json` [syntax (`~`, `^`)](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies) : `npm update`
