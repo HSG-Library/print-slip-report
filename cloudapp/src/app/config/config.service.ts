@@ -9,6 +9,7 @@ export type PrintSlipReportConfig = {
   columnDefaults: PrintSlipReportColumnConfig[]
   groupByLocation: boolean
   sortByFirstColumn: boolean
+  filterDigiRequests: boolean
 }
 
 export type PrintSlipReportLibraryConfig = {
@@ -77,13 +78,23 @@ export class ConfigService {
     this.config = { ...this.config, sortByFirstColumn: v }
   }
 
-  
+
+  get filterDigiRequests() {
+    return this.config?.filterDigiRequests
+  }
+
+
+  set filterDigiRequests(v) {
+    this.config = { ...this.config, filterDigiRequests: v }
+  }
+
+
   async load() {
     if (!this.loaded) {
-      this.config = { columnDefaults: [], libraryConfigs: [] , groupByLocation: false, sortByFirstColumn: false }
+      this.config = { columnDefaults: [], libraryConfigs: [], groupByLocation: false, sortByFirstColumn: false, filterDigiRequests: false }
       try {
-        let loadedConfig: PrintSlipReportConfig | { } = await this.configService.get().toPromise()
-        _.defaultsDeep(loadedConfig, { columnDefaults: [ { include: false, limit: 0 } ] })
+        let loadedConfig: PrintSlipReportConfig | {} = await this.configService.get().toPromise()
+        _.defaultsDeep(loadedConfig, { columnDefaults: [{ include: false, limit: 0 }] })
         this.config = { ...this.config, ...loadedConfig }
       } catch (err) {
         console.warn('Failed to load the app configuration', err)

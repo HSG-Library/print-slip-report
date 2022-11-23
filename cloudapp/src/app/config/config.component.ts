@@ -12,16 +12,17 @@ import { LibrariesService } from './libraries.service'
 @Component({
   selector: 'app-config',
   templateUrl: './config.component.html',
-  styleUrls: [ './config.component.scss' ],
+  styleUrls: ['./config.component.scss'],
 })
 export class ConfigComponent implements OnInit {
 
 
   form = this.fb.group({  // Initialised properly in restoreConfig()
-    circDeskCodeDefaults: [ [] ],
-    columnOptionsList: [ [] ],
-    groupByLocation: [ [] ],
-    sortByFirstColumn: [ [] ],
+    circDeskCodeDefaults: [[]],
+    columnOptionsList: [[]],
+    groupByLocation: [[]],
+    sortByFirstColumn: [[]],
+    filterDigiRequests: [[]],
   })
   ready = false
   saving = false
@@ -64,6 +65,11 @@ export class ConfigComponent implements OnInit {
   }
 
 
+  get filterDigiRequests(): FormControl {
+    return this.form.get('filterDigiRequests') as FormControl
+  }
+
+
   async onSave() {
     try {
       this.saving = true
@@ -79,19 +85,20 @@ export class ConfigComponent implements OnInit {
 
 
   async restoreConfig() {
-    await Promise.all([ this.configService.load(), this.librariesService.load() ])
+    await Promise.all([this.configService.load(), this.librariesService.load()])
     this.form.setValue({
       circDeskCodeDefaults: this.restoreCircDeskCodeDefaults(),
       columnOptionsList: this.restoreColumnOptionsList(),
       groupByLocation: this.restoreGroupByLocation(),
       sortByFirstColumn: this.restoreSortByFirstColumn(),
+      filterDigiRequests: this.restoreFilterDigiRequests(),
     })
   }
 
 
   private restoreCircDeskCodeDefaults() {
     let libraryConfigs = new Map(
-      this.configService.libraryConfigs.map(c => [ c.libraryCode, c ])
+      this.configService.libraryConfigs.map(c => [c.libraryCode, c])
     )
     let circDeskCodeDefaults: CircDeskCodeDefault[] = (
       this.librariesService.sortedCodes.map(libraryCode => ({
@@ -109,18 +116,18 @@ export class ConfigComponent implements OnInit {
       // Start with the columns in the order they are from the app configuration,
       ...(
         (this.configService.config?.columnDefaults ?? [])
-        // ... minus any that aren't defined anymore
-        .filter(c => missingColumnDefinitions.has(c.code))
-        .map(c => {
-          let name = missingColumnDefinitions.get(c.code).name
-          missingColumnDefinitions.delete(c.code)
-          return { include: false, limit: 0, hiddenInApp: false, ...c, name }
-        })
+          // ... minus any that aren't defined anymore
+          .filter(c => missingColumnDefinitions.has(c.code))
+          .map(c => {
+            let name = missingColumnDefinitions.get(c.code).name
+            missingColumnDefinitions.delete(c.code)
+            return { include: false, limit: 0, hiddenInApp: false, ...c, name }
+          })
       ),
       // Add any columns not in the app configuration, in the order they appear in the column definitions
       ...(
         Array.from(missingColumnDefinitions.values())
-             .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false }))
+          .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false }))
       )
     ]
     return columnOptions
@@ -128,20 +135,25 @@ export class ConfigComponent implements OnInit {
 
 
   private restoreGroupByLocation(): boolean {
-    return this.configService.groupByLocation || false;
+    return this.configService.groupByLocation || false
   }
 
 
   private restoreSortByFirstColumn(): boolean {
-    return this.configService.sortByFirstColumn || false;
+    return this.configService.sortByFirstColumn || false
   }
 
+
+  private restoreFilterDigiRequests(): boolean {
+    return this.configService.filterDigiRequests || false
+  }
 
   async saveConfig() {
     this.saveCircDeskCodeDefaults()
     this.saveColumnOptionsList()
     this.saveGroupByLocation()
     this.saveSortByFirstColumn()
+    this.saveFilterDigiRequests()
     await this.configService.save()
   }
 
@@ -149,8 +161,8 @@ export class ConfigComponent implements OnInit {
   private saveCircDeskCodeDefaults() {
     this.configService.libraryConfigs = (
       this.form.value.circDeskCodeDefaults
-      .map(v => ({ libraryCode: v.libraryCode, defaultCircDeskCode: v.defaultCircDeskCode.trim() }))
-      .filter(v => v.defaultCircDeskCode)
+        .map(v => ({ libraryCode: v.libraryCode, defaultCircDeskCode: v.defaultCircDeskCode.trim() }))
+        .filter(v => v.defaultCircDeskCode)
     )
   }
 
@@ -171,6 +183,10 @@ export class ConfigComponent implements OnInit {
 
   private saveSortByFirstColumn() {
     this.configService.sortByFirstColumn = this.form.value.sortByFirstColumn
+  }
+
+  private saveFilterDigiRequests() {
+    this.configService.filterDigiRequests = this.form.value.filterDigiRequests
   }
 
 }

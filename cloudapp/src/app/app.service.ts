@@ -48,7 +48,8 @@ export class AppService {
     let selectedByDefault = this.defaultColumnOptions.filter(_ => _.include)
     let r = (
       selected.length !== selectedByDefault.length
-      || ! _.every(
+      || !
+      _.every(
         _.zip(selected, selectedByDefault),
         ([a, b]) => {
           let r2 = (
@@ -117,6 +118,11 @@ export class AppService {
 
   get sortByFirstColumn(): boolean {
     return this.configService.sortByFirstColumn
+  }
+
+
+  get filterDigiRequests(): boolean {
+    return this.configService.filterDigiRequests
   }
 
 

@@ -52,7 +52,7 @@ export class RequestedResourcesService {
     enrichmentOptions: EnrichmentOptions,
   ): Promise<RequestedResource[]> {
 
-    let pages: Page[] = [ this.constructPage(0, pageSize, enrichmentOptions) ]
+    let pages: Page[] = [this.constructPage(0, pageSize, enrichmentOptions)]
 
     let totalRecordCount = await pages[0].fetchPage()
     if (progressChange) {
@@ -80,7 +80,7 @@ export class RequestedResourcesService {
         )
       }
 
-      addToPendingPromises([ (pagesIterator.next().value as Page).fetch() ])
+      addToPendingPromises([(pagesIterator.next().value as Page).fetch()])
 
       while (pendingPromises.length > 0) {
         let progress = pages.reduce<number>((acc, page) => acc + page.progress, 0) / pages.length
@@ -93,7 +93,7 @@ export class RequestedResourcesService {
           addToPendingPromises(ret.additionalPendingPromises)
           let n = pagesIterator.next()
           if (!n.done) {
-            addToPendingPromises([ (n.value as Page).fetch() ])
+            addToPendingPromises([(n.value as Page).fetch()])
           }
         }
       }
@@ -107,6 +107,7 @@ export class RequestedResourcesService {
     if (progressChange) {
       progressChange.emit(100)   // Force the progress spinner animation to end at 100
     }
+    requestedResources.filter(request => request.request)
     return requestedResources
   }
 
@@ -260,7 +261,7 @@ class Page {
     }
   }
 
-  
+
   private getOrderBy() {
     if (this.appService.groupByLocation) {
       return 'location'
