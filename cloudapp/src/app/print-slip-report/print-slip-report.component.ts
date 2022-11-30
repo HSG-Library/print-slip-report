@@ -1,4 +1,3 @@
-import { Platform } from '@angular/cdk/platform'
 import { DOCUMENT } from '@angular/common'
 import { Component, Inject, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core'
 import { AlertService } from '@exlibris/exl-cloudapp-angular-lib'
@@ -118,7 +117,23 @@ export class PrintSlipReportComponent implements OnDestroy, OnInit {
     let resource_metadata = requestedResource.resource_metadata
     let location = requestedResource.location
     return requestedResource.request
+      // hide digitization requests (if enabled in config)
       .filter(request => !this.appService.filterDigiRequests || request.request_type != "DIGITIZATION")
+      // hide request if filter in column option matches
+      .filter(request => {
+        return !this.includedColumnOptions.map(col => {
+          try {
+            if (col.filter) {
+              let value = COLUMNS_DEFINITIONS.get(col.code).mapFn({ resource_metadata, location, request })
+              return value.includes(col.filter)
+            }
+            return false
+          } catch (err) {
+            console.error(`Failed to mapped column ${col.name} for `, requestedResource, err)
+            return false
+          }
+        }).some(filterMatch => filterMatch == true)
+      })
       .map(request => {
         let values = this.includedColumnOptions.map(col => {
           try {

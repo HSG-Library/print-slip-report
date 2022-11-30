@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="options">
     <mat-list-option #listOption (blur)="onTouched()" [disabled]="disabled" [selected]="include" [value]="code">
       {{ name }}
@@ -37,6 +36,14 @@
         <mat-icon>highlight_off</mat-icon>
       </button>
     </div>
+    <div class="filter-option">
+      <mat-form-field floatLabel="always">
+        <mat-label>Filter, hide entire row on match</mat-label>
+        <input matInput [(ngModel)]=" filter" type="text" />
+      </mat-form-field>
+      <button (click)="filter = ''" [disabled]="!filter" mat-icon-button>
+        <mat-icon>highlight_off</mat-icon>
+      </button>
+    </div>
   </div>
-
 </div>

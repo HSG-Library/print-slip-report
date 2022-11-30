@@ -4,34 +4,34 @@
   flex-flow: column nowrap;
 }
 
-
 .container {
   display: flex;
   flex-flow: column nowrap;
 }
 
-
 .boolean-more-options {
-
   display: flex;
   flex-flow: column nowrap;
   margin-right: 24px;
   width: 212px;
-
 }
 
+.filter-option {
+  display: flex;
+  flex-flow: nowrap;
+  align-items: center;
+  margin-right: 40px;
+  width: 180px;
+  margin-top: 10px;
+}
 
 mat-chip-list {
-
   &:focus {
     outline: none;
   }
-
 }
 
-
 mat-list-option {
-
   &.mat-focus-indicator {
     background: inherit;
   }
@@ -39,16 +39,13 @@ mat-list-option {
   &.mat-list-item-disabled {
     background: inherit;
   }
-
 }
-
 
 .more-options {
   align-items: flex-end;
   display: flex;
   flex-flow: column nowrap;
 }
-
 
 .options {
   align-items: center;

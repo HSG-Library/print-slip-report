@@ -29,6 +29,7 @@ export class ColumnOptionComponent implements ControlValueAccessor, OnDestroy {
     include: '',
     limit: 0,
     hiddenInApp: false,
+    filter: '',
   })
   selectionChangeSubs: Subscription[] = []
 
@@ -45,14 +46,17 @@ export class ColumnOptionComponent implements ControlValueAccessor, OnDestroy {
 
 
   get chips(): string[] {
-    let c: string[] = []
+    let chips: string[] = []
     if (this.hiddenInApp) {
-      c.push('hidden in app')
+      chips.push('hidden in app')
     }
     if ((this.alwaysShowChips || this.include) && this.limit) {
-      c.push(`limit to ${this.limit}`)
+      chips.push(`limit to ${this.limit}`)
     }
-    return c
+    if ((this.alwaysShowChips || this.include) && this.filter) {
+      chips.push(`filter: '${this.filter}'`)
+    }
+    return chips
   }
 
 
@@ -94,6 +98,15 @@ export class ColumnOptionComponent implements ControlValueAccessor, OnDestroy {
     v = Math.abs(v) % 1000      // Keep the limit between 0 and 999
     v = v || 0                  // Prefer 0 to undefined or NaN
     this.form.patchValue({ limit: v })
+  }
+
+
+  get filter(): string {
+    return this.value.filter
+  }
+
+  set filter(v: string) {
+    this.form.patchValue({ filter: v })
   }
 
 
