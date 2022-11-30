@@ -16,7 +16,7 @@ export class AppModuleServicesService {
   static getFromWindow(wnd): AppModuleServicesService {
     let s = wnd[WINDOW_KEY]
     if (!s) {
-      throw Error(`No ${ WINDOW_KEY } defined on window`)
+      throw Error(`No ${WINDOW_KEY} defined on window`)
     }
     return s
   }

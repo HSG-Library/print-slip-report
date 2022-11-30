@@ -8,7 +8,7 @@ type SlipReportProgressOrientation = 'horizontal' | 'vertical'
 @Component({
   selector: 'slip-report-progress',
   templateUrl: './progress.component.html',
-  styleUrls: [ './progress.component.scss' ],
+  styleUrls: ['./progress.component.scss'],
 })
 export class SlipReportProgressComponent {
 

@@ -25,7 +25,7 @@
     <div class="limit-option">
       <mat-form-field class="limit-form-field" floatLabel="always">
         <mat-label>Limit</mat-label>
-        <input (blur)="onTouched()" matInput max="999" min="0" [(ngModel)]="limit" type="number"/>
+        <input (blur)="onTouched()" matInput max="999" min="0" [(ngModel)]="limit" type="number" />
         <mat-hint *ngIf="limit">
           Truncate {{ name }} after {{ limit }} characters
         </mat-hint>
@@ -33,7 +33,9 @@
           Don't truncate {{ name }}
         </mat-hint>
       </mat-form-field>
-      <button (click)="limit = 0" [disabled]="!limit" mat-icon-button><mat-icon>highlight_off</mat-icon></button>
+      <button (click)="limit = 0" [disabled]="!limit" mat-icon-button>
+        <mat-icon>highlight_off</mat-icon>
+      </button>
     </div>
   </div>
 

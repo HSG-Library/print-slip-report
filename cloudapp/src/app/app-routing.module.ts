@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'download-excel-slip-report',
-    loadChildren: () =>  import('./download-excel-slip-report/download-excel-slip-report.module').then(m => m.DownloadExcelSlipReportModule)
+    loadChildren: () => import('./download-excel-slip-report/download-excel-slip-report.module').then(m => m.DownloadExcelSlipReportModule)
   },
   {
     path: 'print-slip-report',
@@ -25,7 +25,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, { useHash: true }) ],
-  exports: [ RouterModule ],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }

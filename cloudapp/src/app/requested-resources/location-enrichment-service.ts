@@ -15,7 +15,7 @@ export class LocationEnrichmentService {
 
 
   enrich(requestedResource: RequestedResource): Promise<void>[] | undefined {
-    return [ this._enrichShelvingLocation(requestedResource) ]
+    return [this._enrichShelvingLocation(requestedResource)]
   }
 
 

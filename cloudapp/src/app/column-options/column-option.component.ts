@@ -9,7 +9,7 @@ import { ColumnOption } from './column-option'
 @Component({
   selector: 'app-column-option',
   templateUrl: './column-option.component.html',
-  styleUrls: [ './column-option.component.scss' ],
+  styleUrls: ['./column-option.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -45,7 +45,7 @@ export class ColumnOptionComponent implements ControlValueAccessor, OnDestroy {
 
 
   get chips(): string[] {
-    let c: string[] = [ ]
+    let c: string[] = []
     if (this.hiddenInApp) {
       c.push('hidden in app')
     }
@@ -129,7 +129,7 @@ export class ColumnOptionComponent implements ControlValueAccessor, OnDestroy {
   }
 
 
-  onTouched: Function = () => {}
+  onTouched: Function = () => { }
 
 
   registerOnChange(onChange: any): void {
