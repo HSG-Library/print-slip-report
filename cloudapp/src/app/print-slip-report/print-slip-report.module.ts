@@ -30,17 +30,17 @@ import { PrintSlipReportWindowService } from './window.service'
     {
       provide: AppService,
       useFactory: (a: AppModuleServicesService) => a.appService,
-      deps: [ AppModuleServicesService ],
+      deps: [AppModuleServicesService],
     },
     {
       provide: PrintSlipReportWindowService,
       useFactory: (a: AppModuleServicesService) => a.printSlipReportWindowService,
-      deps: [ AppModuleServicesService ],
+      deps: [AppModuleServicesService],
     },
     {
       provide: RequestedResourcesService,
       useFactory: (a: AppModuleServicesService) => a.requestedResourcesService,
-      deps: [ AppModuleServicesService ],
+      deps: [AppModuleServicesService],
     },
     PrintSlipReportService,
   ],

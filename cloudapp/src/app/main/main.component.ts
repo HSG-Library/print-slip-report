@@ -11,14 +11,14 @@ import { SlipReportError, SlipReportErrorEvent } from '../slip-report'
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: [ './main.component.scss' ],
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements AfterViewInit, OnInit {
 
   form = this.fb.group({
     libraryCode: '',
     circDeskCode: '',
-    columnOptionsList: [ [ ] ],
+    columnOptionsList: [[]],
   })
   loading = false
   ready = false
@@ -171,30 +171,30 @@ export class MainComponent implements AfterViewInit, OnInit {
         case 'library':
           this.libraryCodeControl.setErrors({ 'invalidCode': true })
           this.alert.info(
-            `Valid library codes are ${ error.validOptions.join(', ') }`,
+            `Valid library codes are ${error.validOptions.join(', ')}`,
             { autoClose: false },
           )
           break
         case 'circ_desk':
           this.circDeskCodeControl.setErrors({ 'invalidCode': true })
           this.alert.info(
-            `Valid circulation desk codes are ${ error.validOptions.join(', ') }`,
+            `Valid circulation desk codes are ${error.validOptions.join(', ')}`,
             { autoClose: false },
           )
           break
         default:
-          this.alert.error(`The API parameter ${ error.parameter } was invalid`)
+          this.alert.error(`The API parameter ${error.parameter} was invalid`)
       }
     } else if (SlipReportErrorEvent.isRestErrorResponse(error) && error?.status == 401) {
       // Unauthorised
       this.alert.error(
         'You are not authorised. Your Alma user needs a Circulation Desk Operator role'
-        + ` for the library ${ this.form.value.libraryCode } `
-        + ` and the circulation desk ${ this.form.value.circDeskCode }.`,
+        + ` for the library ${this.form.value.libraryCode} `
+        + ` and the circulation desk ${this.form.value.circDeskCode}.`,
       )
     } else {
       let msg = error.message || "See the console in your browser's developer tools for more information."
-      this.alert.error(`Something went wrong trying to find the requests. ${ msg }`)
+      this.alert.error(`Something went wrong trying to find the requests. ${msg}`)
     }
   }
 

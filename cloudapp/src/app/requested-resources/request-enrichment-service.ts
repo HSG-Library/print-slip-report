@@ -40,17 +40,17 @@ export class RequestEnrichmentService {
 
   private _enrichManyRequests(requestedResource: RequestedResource): Promise<void>[] | undefined {
     let reqMap = new Map<string, RequestedResource['request'][number]>(
-      requestedResource.request.map(r => [ r.id, r ])
+      requestedResource.request.map(r => [r.id, r])
     )
     return (
       requestedResource.location.copy.map(async copy => {
-        for (let almaRequest of copy.link ? await this._fetchItemRequests(`${ copy.link }/requests`) : []) {
+        for (let almaRequest of copy.link ? await this._fetchItemRequests(`${copy.link}/requests`) : []) {
           let req = reqMap.get(almaRequest.request_id)
           if (req.copies?.size) {
             req.copies.add(copy)
           } else {
             await this._enrichRequest(req, almaRequest)
-            req.copies = new Set([ copy ])
+            req.copies = new Set([copy])
           }
         }
       })
@@ -83,6 +83,8 @@ export class RequestEnrichmentService {
             r => r.request_id == enrichedRequest.resource_sharing.id,
           )
           enrichedRequest.resource_sharing.volume = lendingRequest.volume
+          enrichedRequest.resource_sharing.partner = lendingRequest.partner
+          enrichedRequest.resource_sharing.note = lendingRequest.note
         } catch (e) {
           console.error(e)
         }

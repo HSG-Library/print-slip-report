@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core'
 import { CloudAppRestService } from '@exlibris/exl-cloudapp-angular-lib'
 import LRU from 'lru-cache'
+import { StringWithAttr } from './requested-resources'
 
 
 export interface ResourceSharingRequest {
   request_id: string
   volume: string
+  partner: StringWithAttr
+  note: string | null
 }
 
 

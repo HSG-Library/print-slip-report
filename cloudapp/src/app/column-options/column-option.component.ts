@@ -9,7 +9,7 @@ import { ColumnOption } from './column-option'
 @Component({
   selector: 'app-column-option',
   templateUrl: './column-option.component.html',
-  styleUrls: [ './column-option.component.scss' ],
+  styleUrls: ['./column-option.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -29,6 +29,8 @@ export class ColumnOptionComponent implements ControlValueAccessor, OnDestroy {
     include: '',
     limit: 0,
     hiddenInApp: false,
+    search: '',
+    replace: '',
   })
   selectionChangeSubs: Subscription[] = []
 
@@ -45,14 +47,17 @@ export class ColumnOptionComponent implements ControlValueAccessor, OnDestroy {
 
 
   get chips(): string[] {
-    let c: string[] = [ ]
+    let chips: string[] = []
     if (this.hiddenInApp) {
-      c.push('hidden in app')
+      chips.push('hidden in app')
     }
     if ((this.alwaysShowChips || this.include) && this.limit) {
-      c.push(`limit to ${this.limit}`)
+      chips.push(`limit to ${this.limit}`)
     }
-    return c
+    if ((this.alwaysShowChips || this.include) && this.search) {
+      chips.push(`search: '${this.search}'`)
+    }
+    return chips
   }
 
 
@@ -97,6 +102,23 @@ export class ColumnOptionComponent implements ControlValueAccessor, OnDestroy {
   }
 
 
+  get search(): string {
+    return this.value.search
+  }
+
+  set search(v: string) {
+    this.form.patchValue({ search: v })
+  }
+
+  get replace(): string {
+    return this.value.replace
+  }
+
+  set replace(v: string) {
+    this.form.patchValue({ replace: v })
+  }
+
+
   @ViewChild('listOption')
   set listOption(matListOption: MatListOption) {
     // MatListOption doesn't have an output the tell us when it's checkbox changes.
@@ -129,7 +151,7 @@ export class ColumnOptionComponent implements ControlValueAccessor, OnDestroy {
   }
 
 
-  onTouched: Function = () => {}
+  onTouched: Function = () => { }
 
 
   registerOnChange(onChange: any): void {

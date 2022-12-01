@@ -14,7 +14,7 @@ export type ColumnMapFn<T extends RequestedResource> = (
       request: T['request'][number],
     },
   )
-  => string | undefined
+    => string | undefined
 )
 
 
@@ -39,7 +39,7 @@ export class ColumnDefinition {
     public code: string,
     public name: string,
     public mapFn: ColumnMapFn<RequestedResource>
-  ) {}
+  ) { }
 
   get enrichmentOptions(): EnrichmentOptions {
     return {}
@@ -152,7 +152,7 @@ export class UserEnrichedColumnDefinition extends ColumnDefinition {
 
 export const COLUMNS_DEFINITIONS = toMap([
   new ColumnDefinition('title', 'Title', ({ resource_metadata }) => resource_metadata.title),
-  new ItemAndLocationEnrichedColumnDefinition('location','Location', locationMapFn),
+  new ItemAndLocationEnrichedColumnDefinition('location', 'Location', locationMapFn),
   new ColumnDefinition('call-number', 'Call Number', ({ location }) => location.call_number),
   new ItemAndRequestEnrichedColumnDefinition('accession-number', 'Accession Number', perCopy(copy => copy.accession_number)),
   new ColumnDefinition('author', 'Author', ({ resource_metadata }) => resource_metadata.author),
@@ -162,7 +162,7 @@ export const COLUMNS_DEFINITIONS = toMap([
   new ColumnDefinition('imprint', 'Imprint', imprintMapFn),
   new ColumnDefinition('publisher', 'Publisher', ({ resource_metadata }) => resource_metadata.publisher),
   new ColumnDefinition('publication-date', 'Publication Date', ({ resource_metadata }) => resource_metadata.publication_year),
-  new ColumnDefinition('request-type', 'Request Type', ({ request}) => request.request_sub_type?.desc),
+  new ColumnDefinition('request-type', 'Request Type', ({ request }) => request.request_sub_type?.desc),
   new ColumnDefinition('requested-for', 'Requested For', ({ request }) => request.requester?.desc),
   new ColumnDefinition('request-id', 'Request ID', ({ request }) => request.id),
   new ColumnDefinition('request-date', 'Request Date', ({ request }) => request.request_date),
@@ -179,6 +179,8 @@ export const COLUMNS_DEFINITIONS = toMap([
   new RequestEnrichedColumnDefinition('storage-location-id', 'Storage Location ID', perCopy(copy => copy.storage_location_id)),
   new RequestEnrichedColumnDefinition('resource-sharing-request-id', 'Resource Sharing Request ID', ({ request }) => request.resource_sharing?.id),
   new RequestEnrichedColumnDefinition('resource-sharing-volume', 'Resource Sharing Volume', ({ request }) => request.resource_sharing?.volume),
+  new RequestEnrichedColumnDefinition('resource-sharing-partner', 'Resource Sharing Partner', ({ request }) => request.resource_sharing?.partner.desc),
+  new RequestEnrichedColumnDefinition('resource-sharing-note', 'Resource Sharing Note', ({ request }) => request.resource_sharing?.note),
   new UserEnrichedColumnDefinition('requester-user-group', 'Requester User Group', ({ request }) => request.requester?.user_group?.desc),
 ])
 
@@ -190,7 +192,7 @@ type MapFnParams<T extends new (...args: any) => any> = Parameters<MapFn<T>>[0]
 
 
 function chapterOrArticleMapFn({ request }: MapFnParams<typeof RequestEnrichedColumnDefinition>): string | undefined {
-  return _filteredJoin([ request.chapter_or_article_title, request.chapter_or_article_author ], ' / ')
+  return _filteredJoin([request.chapter_or_article_title, request.chapter_or_article_author], ' / ')
 }
 
 
@@ -198,7 +200,7 @@ function imprintMapFn({ resource_metadata }: MapFnParams<typeof ColumnDefinition
   let publisher = resource_metadata.publisher
   let publication_place = resource_metadata.publication_place
   let publication_year = resource_metadata.publication_year
-  return _filteredJoin([ publication_place, publisher, publication_year ], ' ')
+  return _filteredJoin([publication_place, publisher, publication_year], ' ')
 }
 
 
@@ -217,8 +219,8 @@ function locationMapFn({ location }: MapFnParams<typeof ItemAndLocationEnrichedC
     return _filteredDedupedJoin(
       location.copy.map((c: ItemEnrichmentCopy) =>
         c.temp_location?.desc
-        ? `${ c.temp_location.desc } (${ c.temp_location.value })`
-        : c.temp_location?.value
+          ? `${c.temp_location.desc} (${c.temp_location.value})`
+          : c.temp_location?.value
       ),
       ' ',
     )
@@ -226,7 +228,7 @@ function locationMapFn({ location }: MapFnParams<typeof ItemAndLocationEnrichedC
     let details = location?.shelving_location_details
     return (
       details?.name
-        ? `${ details.name } (${ details.code })`
+        ? `${details.name} (${details.code})`
         : location?.shelving_location ?? ''
     )
   }
@@ -235,7 +237,7 @@ function locationMapFn({ location }: MapFnParams<typeof ItemAndLocationEnrichedC
 
 function pagesMapFn({ request }: MapFnParams<typeof RequestEnrichedColumnDefinition>): string | undefined {
   return _filteredJoin(
-    request.required_pages_range?.map(range => _filteredJoin([ range.from_page, range.to_page ], '-')),
+    request.required_pages_range?.map(range => _filteredJoin([range.from_page, range.to_page], '-')),
     ', '
   )
 }
@@ -260,7 +262,7 @@ function perCopy(perCopyMapFn: PerCopyMapFn): MapFn<typeof RequestEnrichedColumn
 
 
 function toMap(list: ColumnDefinition[]): Map<string, ColumnDefinition> {
-  return new Map(list.map(x => [ x.code, x ]))
+  return new Map(list.map(x => [x.code, x]))
 }
 
 

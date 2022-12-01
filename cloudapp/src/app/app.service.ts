@@ -48,13 +48,16 @@ export class AppService {
     let selectedByDefault = this.defaultColumnOptions.filter(_ => _.include)
     let r = (
       selected.length !== selectedByDefault.length
-      || ! _.every(
+      || !
+      _.every(
         _.zip(selected, selectedByDefault),
         ([a, b]) => {
           let r2 = (
             a.code === b.code
             && a.hiddenInApp === b.hiddenInApp
             && a.limit === b.limit
+            && a.search === b.search
+            && a.replace === b.replace
           )
           console.log('columnOptionsAreCustomised inner result', r2)
           return r2
@@ -83,13 +86,13 @@ export class AppService {
           .map(c => {
             let name = missingColumnDefinitions.get(c.code).name
             missingColumnDefinitions.delete(c.code)
-            return { include: false, limit: 0, hiddenInApp: false, ...c, name }
+            return { include: false, limit: 0, hiddenInApp: false, search: '', replace: '', ...c, name, }
           })
       ),
       // Add any columns not in the app configuration, in the order they appear in the column definitions
       ...(
         Array.from(missingColumnDefinitions.values())
-          .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false }))
+          .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false, search: '', replace: '', }))
       )
     ]
   }
@@ -117,6 +120,11 @@ export class AppService {
 
   get sortByFirstColumn(): boolean {
     return this.configService.sortByFirstColumn
+  }
+
+
+  get filterDigiRequests(): boolean {
+    return this.configService.filterDigiRequests
   }
 
 
@@ -161,13 +169,13 @@ export class AppService {
             .map(c => {
               let name = missingColumnDefinitions.get(c.code).name
               missingColumnDefinitions.delete(c.code)
-              return { include: false, limit: 0, hiddenInApp: false, ...c, name }
+              return { include: false, limit: 0, hiddenInApp: false, search: '', replace: '', ...c, name, }
             })
         ),
         // Add any columns not in the app configuration, in the order they appear in the column definitions
         ...(
           Array.from(missingColumnDefinitions.values())
-            .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false }))
+            .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false, search: '', replace: '', }))
         )
       ]
     } else {
@@ -183,7 +191,7 @@ export class AppService {
       columnOptions: (
         this.columnOptionsAreCustomised
           ? this.columnOptions.map(c => ({
-            code: c.code, include: c.include, limit: c.limit, hiddenInApp: c.hiddenInApp
+            code: c.code, include: c.include, limit: c.limit, hiddenInApp: c.hiddenInApp, search: c.search, replace: c.replace,
           }))
           : undefined
       )

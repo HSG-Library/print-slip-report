@@ -40,9 +40,9 @@ export class LibrariesService {
             url: '/conf/libraries',
             method: HttpMethod.GET,
           })
-          .toPromise()
+            .toPromise()
         )
-        this.libraries = new Map(resp?.library?.map(l => [ l.code , l ]))
+        this.libraries = new Map(resp?.library?.map(l => [l.code, l]))
       } finally {
         this.loaded = true
       }

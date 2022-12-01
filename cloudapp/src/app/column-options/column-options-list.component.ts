@@ -13,7 +13,7 @@ import { ColumnOption } from './column-option'
 @Component({
   selector: 'app-column-options-list',
   templateUrl: './column-options-list.component.html',
-  styleUrls: [ './column-options-list.component.scss' ],
+  styleUrls: ['./column-options-list.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -29,8 +29,7 @@ import { ColumnOption } from './column-option'
 })
 export class ColumnOptionsListComponent
   extends RequiredValidator
-  implements AfterContentInit, ControlValueAccessor, OnDestroy, OnInit
-{
+  implements AfterContentInit, ControlValueAccessor, OnDestroy, OnInit {
 
   @Input() alwaysShowChips = false
   @Input() alwaysShowHidden = false
@@ -116,7 +115,7 @@ export class ColumnOptionsListComponent
 
     if (event.container == event.previousContainer && event.currentIndex != event.previousIndex) {
 
-      let v = [ ...this.value ]
+      let v = [...this.value]
 
       // The indexes in the event are indexes into this.visibleControls and not this.value...
       const visibleControls = this.visibleControls
@@ -135,10 +134,10 @@ export class ColumnOptionsListComponent
   }
 
 
-  onTouched: Function = () => {}  // Replaced by registerOnChange
+  onTouched: Function = () => { }  // Replaced by registerOnChange
 
 
-  onValidatorChange: Function = () => {}  // Replaced by registerOnTouched
+  onValidatorChange: Function = () => { }  // Replaced by registerOnTouched
 
 
   registerOnChange(onChange: any): void {
@@ -172,8 +171,8 @@ export class ColumnOptionsListComponent
   validate(control: { value: ColumnOption[] }): ValidationErrors | null {
     return (
       (this.required && !control.value.some(x => x.include))
-      ? { 'required': true }
-      : null
+        ? { 'required': true }
+        : null
     )
   }
 
@@ -186,8 +185,8 @@ export class ColumnOptionsListComponent
   get visibleControls(): FormControl[] {
     return (
       this.alwaysShowHidden || this.showingHidden
-      ? this.listControl.controls
-      : this.listControl.controls.filter(c => !c.value.hiddenInApp)
+        ? this.listControl.controls
+        : this.listControl.controls.filter(c => !c.value.hiddenInApp)
     ) as FormControl[]
   }
 

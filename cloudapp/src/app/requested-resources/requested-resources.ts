@@ -137,10 +137,12 @@ export type RequestEnrichment<BaseRequest extends RequestedResourceRequest[]> = 
       to_page?: string
     }>
     resource_sharing?: {
-      id: string,
+      id: string
       status: StringWithAttr
       link: string | null
       volume?: string
+      partner: StringWithAttr
+      note?: string | null
     }
   }>
 }

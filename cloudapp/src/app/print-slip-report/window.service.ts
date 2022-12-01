@@ -37,7 +37,7 @@ export class PrintSlipReportWindowService {
     let routeUrl = (
       location.prepareExternalUrl(
         router.serializeUrl(
-          router.createUrlTree([ 'print-slip-report' ])
+          router.createUrlTree(['print-slip-report'])
         )
       )
     )

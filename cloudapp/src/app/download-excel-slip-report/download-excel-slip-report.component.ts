@@ -10,7 +10,7 @@ import { DownloadExcelSlipReportService } from './download-excel-slip-report.ser
 @Component({
   selector: 'download-excel-slip-report',
   templateUrl: './download-excel-slip-report.component.html',
-  styleUrls: [ './download-excel-slip-report.component.scss' ],
+  styleUrls: ['./download-excel-slip-report.component.scss'],
 })
 export class DownloadExcelSlipReportComponent implements AfterViewInit, OnDestroy {
 
@@ -42,7 +42,7 @@ export class DownloadExcelSlipReportComponent implements AfterViewInit, OnDestro
       await this.appService.saveLastUsed()
       if (downloadFilename) {
         this.alert.success(
-          `Downloaded the requested resources as ${ downloadFilename }`,
+          `Downloaded the requested resources as ${downloadFilename}`,
           { keepAfterRouteChange: true }
         )
       } else {

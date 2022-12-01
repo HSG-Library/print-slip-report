@@ -14,7 +14,7 @@ export interface CircDeskCodeDefault {
 @Component({
   selector: 'app-circ-desk-code-defaults',
   templateUrl: './circ-desk-code-defaults.component.html',
-  styleUrls: [ './circ-desk-code-defaults.component.scss' ],
+  styleUrls: ['./circ-desk-code-defaults.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -33,7 +33,7 @@ export class CircDeskCodeDefaultsComponent implements ControlValueAccessor, OnDe
 
   constructor(
     private fb: FormBuilder
-  ) {}
+  ) { }
 
 
   ngOnDestroy(): void {
@@ -61,10 +61,10 @@ export class CircDeskCodeDefaultsComponent implements ControlValueAccessor, OnDe
   }
 
 
-  onTouched: Function = () => {}
+  onTouched: Function = () => { }
 
 
-  onValidatorChange: Function = () => {}
+  onValidatorChange: Function = () => { }
 
 
   registerOnChange(onChange: any): void {

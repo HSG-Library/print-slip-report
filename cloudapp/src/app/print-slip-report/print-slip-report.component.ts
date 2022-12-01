@@ -1,4 +1,3 @@
-import { Platform } from '@angular/cdk/platform'
 import { DOCUMENT } from '@angular/common'
 import { Component, Inject, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core'
 import { AlertService } from '@exlibris/exl-cloudapp-angular-lib'
@@ -14,7 +13,7 @@ import { PrintSlipReportService } from './print-slip-report.service'
 @Component({
   selector: 'app-print-slip-report',
   templateUrl: './print-slip-report.component.html',
-  styleUrls: [ './print-slip-report.component.scss' ],
+  styleUrls: ['./print-slip-report.component.scss'],
 })
 export class PrintSlipReportComponent implements OnDestroy, OnInit {
 
@@ -77,7 +76,7 @@ export class PrintSlipReportComponent implements OnDestroy, OnInit {
 
 
   get cloudAppThemeClass(): string {
-    return `cloudapp-theme--${ this.appService.initData.color }`
+    return `cloudapp-theme--${this.appService.initData.color}`
   }
 
 
@@ -98,7 +97,7 @@ export class PrintSlipReportComponent implements OnDestroy, OnInit {
         groupedTables.set(row.group, [])
       }
       groupedTables.get(row.group).push(row)
-      return groupedTables;
+      return groupedTables
     })
     if (this.appService.sortByFirstColumn) {
       groupedTables.forEach((tableRowGroup) => {
@@ -107,7 +106,7 @@ export class PrintSlipReportComponent implements OnDestroy, OnInit {
             return 0
           }
           return ('' + tableRow1.values[0]).localeCompare(tableRow2.values[0])
-        });
+        })
       })
     }
     return groupedTables
@@ -117,26 +116,33 @@ export class PrintSlipReportComponent implements OnDestroy, OnInit {
   private mapColumns(requestedResource: RequestedResource): TableRow[] | undefined {
     let resource_metadata = requestedResource.resource_metadata
     let location = requestedResource.location
-    return requestedResource.request.map(request => {
-      let values = this.includedColumnOptions.map(col => {
-        try {
-          let v = COLUMNS_DEFINITIONS.get(col.code).mapFn({ resource_metadata, location, request })
-          return (
-            (col.limit && v.length > col.limit)
-              ? `${v.substring(0, col.limit)}…`
-              : v
-          )
-        } catch (err) {
-          console.error(`Failed to mapped column ${ col.name } for `, requestedResource, err)
-          return undefined
+    return requestedResource.request
+      // hide digitization requests (if enabled in config)
+      .filter(request => !this.appService.filterDigiRequests || request.request_type != "DIGITIZATION")
+      .map(request => {
+        let values = this.includedColumnOptions.map(col => {
+          try {
+            let v = COLUMNS_DEFINITIONS.get(col.code).mapFn({ resource_metadata, location, request })
+            if (col.search) {
+              v = v.replace(new RegExp(col.search), col.replace ?? '')
+            }
+            return (
+              (col.limit && v.length > col.limit)
+                ? `${v.substring(0, col.limit + 1)}…`
+                : v
+            )
+          } catch (err) {
+            console.error(`Failed to mapped column ${col.name} for `, requestedResource, err)
+            return undefined
+          }
+        })
+
+        let group = 'none'
+        if (this.appService.groupByLocation) {
+          group = location.shelving_location
         }
+        return new TableRow(values, group)
       })
-      let group = 'none'
-      if (this.appService.groupByLocation) {
-        group = location.shelving_location
-      }
-      return new TableRow(values, group)
-    })
   }
 
 

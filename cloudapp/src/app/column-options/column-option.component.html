@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="options">
     <mat-list-option #listOption (blur)="onTouched()" [disabled]="disabled" [selected]="include" [value]="code">
       {{ name }}
@@ -25,7 +24,7 @@
     <div class="limit-option">
       <mat-form-field class="limit-form-field" floatLabel="always">
         <mat-label>Limit</mat-label>
-        <input (blur)="onTouched()" matInput max="999" min="0" [(ngModel)]="limit" type="number"/>
+        <input (blur)="onTouched()" matInput max="999" min="0" [(ngModel)]="limit" type="number" />
         <mat-hint *ngIf="limit">
           Truncate {{ name }} after {{ limit }} characters
         </mat-hint>
@@ -33,8 +32,26 @@
           Don't truncate {{ name }}
         </mat-hint>
       </mat-form-field>
-      <button (click)="limit = 0" [disabled]="!limit" mat-icon-button><mat-icon>highlight_off</mat-icon></button>
+      <button (click)="limit = 0" [disabled]="!limit" mat-icon-button>
+        <mat-icon>highlight_off</mat-icon>
+      </button>
+    </div>
+    <div class="filter-option">
+      <mat-form-field floatLabel="always">
+        <mat-label>Search (RegEx supported)</mat-label>
+        <input matInput [(ngModel)]="search" type="text" />
+        <mat-hint *ngIf="search">
+          Search for '{{search}}' and replace by '{{replace}}'
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field floatLabel="always">
+        <mat-label>Replace</mat-label>
+        <input matInput [(ngModel)]="replace" type="text" />
+        <mat-hint *ngIf="replace">
+          Search for '{{search}}' and replace by '{{replace}}'
+        </mat-hint>
+      </mat-form-field>
+
     </div>
   </div>
-
 </div>
