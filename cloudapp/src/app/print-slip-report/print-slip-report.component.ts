@@ -119,28 +119,16 @@ export class PrintSlipReportComponent implements OnDestroy, OnInit {
     return requestedResource.request
       // hide digitization requests (if enabled in config)
       .filter(request => !this.appService.filterDigiRequests || request.request_type != "DIGITIZATION")
-      // hide request if filter in column option matches
-      .filter(request => {
-        return !this.includedColumnOptions.map(col => {
-          try {
-            if (col.filter) {
-              let value = COLUMNS_DEFINITIONS.get(col.code).mapFn({ resource_metadata, location, request })
-              return value.includes(col.filter)
-            }
-            return false
-          } catch (err) {
-            console.error(`Failed to mapped column ${col.name} for `, requestedResource, err)
-            return false
-          }
-        }).some(filterMatch => filterMatch == true)
-      })
       .map(request => {
         let values = this.includedColumnOptions.map(col => {
           try {
             let v = COLUMNS_DEFINITIONS.get(col.code).mapFn({ resource_metadata, location, request })
+            if (col.search) {
+              v = v.replace(new RegExp(col.search), col.replace ?? '')
+            }
             return (
               (col.limit && v.length > col.limit)
-                ? `${v.substring(0, col.limit)}…`
+                ? `${v.substring(0, col.limit + 1)}…`
                 : v
             )
           } catch (err) {

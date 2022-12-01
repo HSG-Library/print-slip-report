@@ -22,7 +22,8 @@ export type PrintSlipReportColumnConfig = {
   include: boolean
   limit: number
   hiddenInApp: boolean
-  filter: string
+  search: string
+  replace: string
 }
 
 
@@ -95,7 +96,7 @@ export class ConfigService {
       this.config = { columnDefaults: [], libraryConfigs: [], groupByLocation: false, sortByFirstColumn: false, filterDigiRequests: false }
       try {
         let loadedConfig: PrintSlipReportConfig | {} = await this.configService.get().toPromise()
-        _.defaultsDeep(loadedConfig, { columnDefaults: [{ include: false, limit: 0, filter: '' }] })
+        _.defaultsDeep(loadedConfig, { columnDefaults: [{ include: false, limit: 0, search: '', replace: '' }] })
         this.config = { ...this.config, ...loadedConfig }
       } catch (err) {
         console.warn('Failed to load the app configuration', err)

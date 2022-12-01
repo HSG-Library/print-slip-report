@@ -56,7 +56,8 @@ export class AppService {
             a.code === b.code
             && a.hiddenInApp === b.hiddenInApp
             && a.limit === b.limit
-            && a.filter === b.filter
+            && a.search === b.search
+            && a.replace === b.replace
           )
           console.log('columnOptionsAreCustomised inner result', r2)
           return r2
@@ -85,13 +86,13 @@ export class AppService {
           .map(c => {
             let name = missingColumnDefinitions.get(c.code).name
             missingColumnDefinitions.delete(c.code)
-            return { include: false, limit: 0, hiddenInApp: false, filter: '', ...c, name, }
+            return { include: false, limit: 0, hiddenInApp: false, search: '', replace: '', ...c, name, }
           })
       ),
       // Add any columns not in the app configuration, in the order they appear in the column definitions
       ...(
         Array.from(missingColumnDefinitions.values())
-          .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false, filter: '' }))
+          .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false, search: '', replace: '', }))
       )
     ]
   }
@@ -168,13 +169,13 @@ export class AppService {
             .map(c => {
               let name = missingColumnDefinitions.get(c.code).name
               missingColumnDefinitions.delete(c.code)
-              return { include: false, limit: 0, hiddenInApp: false, filter: '', ...c, name, }
+              return { include: false, limit: 0, hiddenInApp: false, search: '', replace: '', ...c, name, }
             })
         ),
         // Add any columns not in the app configuration, in the order they appear in the column definitions
         ...(
           Array.from(missingColumnDefinitions.values())
-            .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false, filter: '', }))
+            .map(c => ({ code: c.code, name: c.name, include: false, limit: 0, hiddenInApp: false, search: '', replace: '', }))
         )
       ]
     } else {
@@ -190,7 +191,7 @@ export class AppService {
       columnOptions: (
         this.columnOptionsAreCustomised
           ? this.columnOptions.map(c => ({
-            code: c.code, include: c.include, limit: c.limit, hiddenInApp: c.hiddenInApp, filter: c.filter,
+            code: c.code, include: c.include, limit: c.limit, hiddenInApp: c.hiddenInApp, search: c.search, replace: c.replace,
           }))
           : undefined
       )

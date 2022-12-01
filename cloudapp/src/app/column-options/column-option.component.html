@@ -38,12 +38,20 @@
     </div>
     <div class="filter-option">
       <mat-form-field floatLabel="always">
-        <mat-label>Filter, hide entire row on match</mat-label>
-        <input matInput [(ngModel)]=" filter" type="text" />
+        <mat-label>Search (RegEx supported)</mat-label>
+        <input matInput [(ngModel)]="search" type="text" />
+        <mat-hint *ngIf="search">
+          Search for '{{search}}' and replace by '{{replace}}'
+        </mat-hint>
       </mat-form-field>
-      <button (click)="filter = ''" [disabled]="!filter" mat-icon-button>
-        <mat-icon>highlight_off</mat-icon>
-      </button>
+      <mat-form-field floatLabel="always">
+        <mat-label>Replace</mat-label>
+        <input matInput [(ngModel)]="replace" type="text" />
+        <mat-hint *ngIf="replace">
+          Search for '{{search}}' and replace by '{{replace}}'
+        </mat-hint>
+      </mat-form-field>
+
     </div>
   </div>
 </div>
