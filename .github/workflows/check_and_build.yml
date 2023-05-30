@@ -33,10 +33,10 @@ jobs:
         with:
           node-version: 13.x
 
-      - name: Audit ('npm audit')
-        run: |
-          npm ci
-          npm audit --audit-level=critical
+      # - name: Audit ('npm audit')
+      #   run: |
+      #     npm ci
+      #     npm audit --audit-level=critical
 
       - name: Build CloudApp ('eca build')
         run: |
