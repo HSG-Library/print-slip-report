@@ -85,6 +85,7 @@ export type ItemEnrichmentCopy<BaseCopy extends RequestedResourceLocation['copy'
     accession_number: string
     in_temp_location: boolean
     temp_location: StringWithAttr
+    temp_call_number: string
   }
 )
 
