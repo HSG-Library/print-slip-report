@@ -175,6 +175,7 @@ export const COLUMNS_DEFINITIONS = toMap([
   new RequestEnrichedColumnDefinition('pickup-location', 'Pickup Location', ({ request }) => request.pickup_location),
   new RequestEnrichedColumnDefinition('item-call-number', 'Item Call Number', perCopy(copy => copy.alternative_call_number)),
   new ItemAndRequestEnrichedColumnDefinition('material-type', 'Material Type', perCopy(copy => copy.physical_material_type?.desc)),
+  new ItemAndRequestEnrichedColumnDefinition('temp_call_number', 'Temp. Call Number', perCopy(copy => copy.temp_call_number)),
   new ColumnDefinition('request-note', 'Request Note', ({ request }) => request.comment),
   new RequestEnrichedColumnDefinition('storage-location-id', 'Storage Location ID', perCopy(copy => copy.storage_location_id)),
   new RequestEnrichedColumnDefinition('resource-sharing-request-id', 'Resource Sharing Request ID', ({ request }) => request.resource_sharing?.id),

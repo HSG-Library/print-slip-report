@@ -44,6 +44,7 @@ export class ItemEnrichmentService {
           enrichedCopy.accession_number = h.accession_number
           enrichedCopy.in_temp_location = h.in_temp_location
           enrichedCopy.temp_location = h.temp_location
+          enrichedCopy.temp_call_number = h.temp_call_number
         }
       })
     )
