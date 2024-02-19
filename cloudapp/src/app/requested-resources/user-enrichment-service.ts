@@ -12,7 +12,7 @@ export class UserEnrichmentService {
 
   private _cache = new LRU<string, Promise<any>>({
     max: 100,
-    maxAge: 60000,  /* 1 min */
+    ttl: 60000,  /* 1 min */
   })
 
 
