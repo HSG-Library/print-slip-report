@@ -45,6 +45,9 @@ export class RequestEnrichmentService {
     return (
       requestedResource.location.copy.map(async copy => {
         for (let almaRequest of copy.link ? await this._fetchItemRequests(`${copy.link}/requests`) : []) {
+          if (!reqMap.has(almaRequest.request_id)) {
+            continue
+          }
           let req = reqMap.get(almaRequest.request_id)
           if (req.copies?.size) {
             req.copies.add(copy)
