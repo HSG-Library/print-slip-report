@@ -1,3 +1,6 @@
+<a href="https://developers.exlibrisgroup.com/appcenter/print-slip-report/">![CloudApp Activations](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapps01.ext.exlibrisgroup.com%2Fappstats.json&query=%24%5B%3F(%40.cloud_app_id%3D%3D'hsg-library%2Fprint-slip-report')%5D.user_count&style=flat&label=Cloud%20App%20Activations)</a>
+<a href="https://developers.exlibrisgroup.com/appcenter/print-slip-report/">![Deployed Version](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapps01.ext.exlibrisgroup.com%2Fapps.json&query=%24%5B%3F(%40.id%3D%3D'hsg-library%2Fprint-slip-report')%5D.version&label=Deployed%20Version&color=green)</a>
+
 # Print Slip Report
 
 <img src="https://github.com/SydneyUniLibrary/print-slip-report/wiki/images/anzreghackathon2021-peopleschoiceaward.png" width="200" align="right">
